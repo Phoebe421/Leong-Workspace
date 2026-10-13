@@ -1,0 +1,468 @@
+{
+  "goals": [
+    {
+      "id": "plan-us-phd",
+      "title": "美国申博 · 2026 申请 / 2027 入学",
+      "category": "美国申博",
+      "notes": "当前目标：2026 年申请，2027 年入学。核心方向：扎实学习技术，在 AI 的一个方向形成研究能力；优先探索医学图像分析、MRI/CT 重建、医疗多模态 AI。可检索 CS、ECE、生物医学工程、医学信息学的相关导师。院校、导师及官方截止日期待核实。\n备选路线：研究助理或有论文与导师指导的研究型硕士；若本轮研究证据不足，评估 2028 年入学。备选不会替代当前目标。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    },
+    {
+      "id": "plan-taiwan-study",
+      "title": "台湾大学暑期深度研究 · 再次申请",
+      "category": "台湾留学",
+      "notes": "此前未能参加，不能记为已完成科研或留学经历。计划再次申请暑期深度研究项目，结合当前 AI 兴趣匹配导师和课题。下一次项目年份、开放时间、资格、费用与具体研究组待官方核实。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    },
+    {
+      "id": "plan-retake",
+      "title": "课程重修申请",
+      "category": "课程重修",
+      "notes": "已确认是课程重修申请。先确认可重修课程、申请流程与时间、成绩记录及 GPA 计算规则，并核实毕业和学位要求。当前成绩、课程清单及毕业时间待补充。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    },
+    {
+      "id": "plan-ielts",
+      "title": "雅思备考 · 目标 8.5",
+      "category": "雅思",
+      "notes": "个人目标：总分 8.5。当前成绩、单项水平、目标考试日期待补充。院校最低要求与个人目标分开记录；不把 8.5 当作所有项目的录取要求。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    },
+    {
+      "id": "plan-technical",
+      "title": "Data Science / AI · 技术基础",
+      "category": "技术与数据",
+      "notes": "先补微积分、线性代数、概率统计；继续学习回归、时间序列、优化。技能次序：Python → SQL → pandas / NumPy → EDA 与可视化 → scikit-learn / ML → PyTorch / 深度学习 / LLM。目标是独立完成数据清洗、EDA、建模、验证、可视化和商业解释。若明确走 Quant，再评估随机过程与金融工程数学。掌握程度待自评。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    },
+    {
+      "id": "plan-research",
+      "title": "医学影像 × AI · 研究证据",
+      "category": "AI 科研",
+      "notes": "探索医学图像分析、MRI/CT 重建与医疗多模态 AI，选择一个小问题持续研究。读论文、复现基线、提出可检验的问题、开展对照实验、记录失败与局限。公开数据集分割与跨来源泛化可作为候选练习，须结合基础、数据许可和导师指导确认。现有科研成果与推荐人待补充。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    },
+    {
+      "id": "plan-analytics",
+      "title": "分析型硕士 · 项目比较与申请",
+      "category": "研究生申请",
+      "notes": "准备 2026 年申请、2027 年入学，逐个核实官方截止日期和先修要求。优先比较 Business Analytics / Data Science / Analytics；数学编程准备充分且兴趣明确时比较 Financial Engineering / Quantitative Finance / FinTech；Finance 项目重点检查 Analytics、Programming、AI 与 Financial Modeling 课程。哥大 MSAA 作为你提过的候选项目记录，名称、课程、学制及要求待官网核实，不视为已申请或录取。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    },
+    {
+      "id": "plan-finance",
+      "title": "金融基础 · 财务与商业判断",
+      "category": "金融学习",
+      "notes": "学习 Accounting、Corporate Finance、Economics、Investments：三张表、估值、DCF、NPV / IRR、资本结构、股票与债券。CFA 可作为学习框架，暂未设定考试或报名任务。目标是理解技术、数据、财务和商业模式，形成投资与创业判断。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    },
+    {
+      "id": "plan-internship",
+      "title": "职业桥梁 · Data / Finance 实习",
+      "category": "职业实践",
+      "notes": "探索医疗 AI 公司、Healthcare VC、医药咨询、券商医药组、FinTech 和数据分析实习。优先积累可证明的数据或金融工作成果；行业和岗位为候选，不记为已有经历。长期方向：FinTech / 投资 / 创业。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    },
+    {
+      "id": "plan-portfolio",
+      "title": "可展示的数据与商业分析项目",
+      "category": "项目作品",
+      "notes": "完成一个数据清洗 → EDA → 建模 → 验证 → 可视化 → 商业解释的项目，展示可运行代码、数据说明、评估结果与局限。结合医疗数据背景建立差异化，再探索金融或商业数据应用。数据权限、资源与具体选题待确认。",
+      "progress": 0,
+      "start": "",
+      "due": ""
+    }
+  ],
+  "tasks": [
+    {
+      "id": "plan-task-us-phd-1",
+      "title": "核实 2027 入学项目的本轮官方截止日期",
+      "category": "美国申博",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-us-phd"
+    },
+    {
+      "id": "plan-task-us-phd-2",
+      "title": "筛选匹配医学影像 AI 的项目与导师",
+      "category": "美国申博",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-us-phd"
+    },
+    {
+      "id": "plan-task-us-phd-3",
+      "title": "梳理 CV、研究经历与推荐人准备事项",
+      "category": "美国申博",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-us-phd"
+    },
+    {
+      "id": "plan-task-us-phd-4",
+      "title": "评估本轮直博准备度与 RA / 研究型硕士备选",
+      "category": "美国申博",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-us-phd"
+    },
+    {
+      "id": "plan-task-us-phd-5",
+      "title": "准备研究兴趣说明与申请材料清单",
+      "category": "美国申博",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-us-phd"
+    },
+    {
+      "id": "plan-task-taiwan-study-1",
+      "title": "核实暑期深度研究项目下一轮开放与资格",
+      "category": "台湾留学",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-taiwan-study"
+    },
+    {
+      "id": "plan-task-taiwan-study-2",
+      "title": "寻找 AI 或医学影像 AI 相关研究组",
+      "category": "台湾留学",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-taiwan-study"
+    },
+    {
+      "id": "plan-task-taiwan-study-3",
+      "title": "准备再次申请的动机与研究兴趣说明",
+      "category": "台湾留学",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-taiwan-study"
+    },
+    {
+      "id": "plan-task-retake-1",
+      "title": "整理需要重修的课程与当前成绩",
+      "category": "课程重修",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-retake"
+    },
+    {
+      "id": "plan-task-retake-2",
+      "title": "核实学校重修申请流程与成绩计算规则",
+      "category": "课程重修",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-retake"
+    },
+    {
+      "id": "plan-task-retake-3",
+      "title": "确认重修安排对毕业和学位授予的影响",
+      "category": "课程重修",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-retake"
+    },
+    {
+      "id": "plan-task-ielts-1",
+      "title": "制定雅思 8.5 目标与单项提升计划",
+      "category": "雅思",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-ielts"
+    },
+    {
+      "id": "plan-task-ielts-2",
+      "title": "完成一次听说读写水平诊断",
+      "category": "雅思",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-ielts"
+    },
+    {
+      "id": "plan-task-ielts-3",
+      "title": "制定每周练习安排",
+      "category": "雅思",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-ielts"
+    },
+    {
+      "id": "plan-task-ielts-4",
+      "title": "确认考试时间、报名与成绩送达安排",
+      "category": "雅思",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-ielts"
+    },
+    {
+      "id": "plan-task-technical-1",
+      "title": "自评数学与 Python 基础，安排补强次序",
+      "category": "技术与数据",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-technical"
+    },
+    {
+      "id": "plan-task-technical-2",
+      "title": "制定线代、概率与编程学习计划",
+      "category": "技术与数据",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-technical"
+    },
+    {
+      "id": "plan-task-technical-3",
+      "title": "完成一个可复现的 Python / 机器学习练习",
+      "category": "技术与数据",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-technical"
+    },
+    {
+      "id": "plan-task-research-1",
+      "title": "选定医学影像 AI 的一个候选研究问题",
+      "category": "AI 科研",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-research"
+    },
+    {
+      "id": "plan-task-research-2",
+      "title": "阅读关键论文并复现一个公开基线",
+      "category": "AI 科研",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-research"
+    },
+    {
+      "id": "plan-task-research-3",
+      "title": "整理导师资源与可指导研究的团队",
+      "category": "AI 科研",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-research"
+    },
+    {
+      "id": "plan-task-research-4",
+      "title": "设计对照实验，记录结果与局限",
+      "category": "AI 科研",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-research"
+    },
+    {
+      "id": "plan-task-research-5",
+      "title": "持续记录个人贡献，为推荐信提供具体证据",
+      "category": "AI 科研",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-research"
+    },
+    {
+      "id": "plan-task-analytics-1",
+      "title": "比较 Analytics / Data Science / 金融科技项目及先修要求",
+      "category": "研究生申请",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-analytics"
+    },
+    {
+      "id": "plan-task-analytics-2",
+      "title": "核实各候选项目 GMAT / GRE、语言与成绩要求",
+      "category": "研究生申请",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-analytics"
+    },
+    {
+      "id": "plan-task-analytics-3",
+      "title": "核实哥大 MSAA 项目名称、课程与官方申请信息",
+      "category": "研究生申请",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-analytics"
+    },
+    {
+      "id": "plan-task-analytics-4",
+      "title": "围绕医疗数据到 AI / Analytics 的迁移整理申请故事",
+      "category": "研究生申请",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-analytics"
+    },
+    {
+      "id": "plan-task-finance-1",
+      "title": "学习三张财务报表与公司金融基础",
+      "category": "金融学习",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-finance"
+    },
+    {
+      "id": "plan-task-finance-2",
+      "title": "完成一次估值与 DCF / NPV / IRR 练习",
+      "category": "金融学习",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-finance"
+    },
+    {
+      "id": "plan-task-finance-3",
+      "title": "用真实公司材料练习商业模式与投资判断",
+      "category": "金融学习",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-finance"
+    },
+    {
+      "id": "plan-task-internship-1",
+      "title": "整理 Data / Finance 相关实习候选岗位",
+      "category": "职业实践",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "high",
+      "status": "todo",
+      "goal": "plan-internship"
+    },
+    {
+      "id": "plan-task-internship-2",
+      "title": "制作突出医疗数据、AI 与分析能力的简历",
+      "category": "职业实践",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-internship"
+    },
+    {
+      "id": "plan-task-internship-3",
+      "title": "准备项目展示后联系或申请相关团队",
+      "category": "职业实践",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-internship"
+    },
+    {
+      "id": "plan-task-portfolio-1",
+      "title": "选择一个可获取且有使用许可的数据集",
+      "category": "项目作品",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-portfolio"
+    },
+    {
+      "id": "plan-task-portfolio-2",
+      "title": "完成清洗、EDA、模型评估与可视化",
+      "category": "项目作品",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-portfolio"
+    },
+    {
+      "id": "plan-task-portfolio-3",
+      "title": "整理代码、复现说明与商业解释",
+      "category": "项目作品",
+      "notes": "建议行动；完成状态、实际成绩和具体截止日期需按你的情况更新。",
+      "due": "",
+      "priority": "medium",
+      "status": "todo",
+      "goal": "plan-portfolio"
+    }
+  ],
+  "opportunities": [],
+  "profile": {
+    "name": "",
+    "headline": "Medical Imaging × Data Science × AI → FinTech / 投资 / 创业",
+    "summary": "长期主线：医学 / 医疗数据 → Data Science / AI → Finance → FinTech / 投资 / 创业，培养技术理解、金融判断与商业决策能力。2026 年申请、2027 年入学；本科毕业规划为 2027 年，具体月份待确认。并行比较分析型硕士、金融科技相关硕士与美国直博路线。雅思个人目标 8.5。保留 RA、研究型硕士及 2028 年入学备选，按准备进度再判断。",
+    "industry": "",
+    "academic": "医学影像技术背景（据你提供的既往规划）。台湾大学暑期深度研究项目此前未能参加，准备结合 AI 方向再次申请。当前均分 / GPA、重修课程与毕业时间待补充。",
+    "skills": "学习计划：数学与统计、Python / SQL / pandas / NumPy / scikit-learn、数据可视化与机器学习；之后学习 PyTorch / 深度学习。金融基础覆盖财务报表、公司金融、经济学、投资与估值。当前掌握程度待自评。",
+    "volunteering": "",
+    "linkedin": "",
+    "cv": ""
+  }
+}
