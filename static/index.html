@@ -5,7 +5,7 @@
 <aside class="sidebar">
   <a class="brand" href="#overview"><span class="brand-icon">L</span><span>Leong<span class="brand-sub">PERSONAL WORKSPACE</span></span></a>
   <div class="workspace-label">我的空间</div>
-  <nav aria-label="主导航"><a href="#overview" data-page="overview"><span>◈</span>Overview</a><a href="#career" data-page="career"><span>↗</span>Career</a><a href="#tasks" data-page="tasks"><span>▣</span>To-do List<span class="nav-count" id="task-count">0</span></a><a href="#ideas" data-page="ideas"><span>✎</span>思考与灵感</a></nav>
+  <nav aria-label="主导航"><a href="#overview" data-page="overview"><span>◈</span>Overview</a><a href="#career" data-page="career"><span>↗</span>Career</a><a href="#tasks" data-page="tasks"><span>▣</span>To-do List<span class="nav-count" id="task-count">0</span></a><a href="#ideas" data-page="ideas"><span>✎</span>思考与灵感</a><a href="#calendar" data-page="calendar"><span>▦</span>智能日历</a></nav>
   <a class="news-nav" href="#news" data-page="news"><span>✧</span>每日情报 <small>AI & ECONOMY</small></a>
   <div class="sidebar-note"><span class="note-spark">✦</span><p>让每一步，<br>都有自己的方向。</p><small>Small steps. Real progress.</small></div>
   <div class="profile"><span class="avatar">L</span><div>我的工作台<small>专注于自己的节奏</small></div><span class="online-dot" title="个人空间"></span></div>
@@ -14,5 +14,5 @@
 <main id="main"></main><footer>为你的目标，留一块专注的空间。<span>Leong Workspace</span></footer></div>
 <dialog id="editor"><form id="edit-form"><div class="modal-heading"><h2 id="modal-title">新增任务</h2><button type="button" class="icon-button" id="close-dialog" aria-label="关闭">×</button></div><div id="fields"></div><div class="form-actions"><button type="button" class="button secondary" id="cancel-dialog">取消</button><button class="button" type="submit" id="save-button">保存</button></div></form></dialog>
 <dialog id="confirm-dialog"><h2>删除这条记录？</h2><p>删除后无法恢复。删除目标不会删除关联任务。</p><div class="form-actions"><button id="keep-item" class="button secondary">保留</button><button id="delete-item" class="button danger">确认删除</button></div></dialog>
-<div id="toast" role="status" aria-live="polite"></div><script src="/app.js" defer></script>
+<div id="toast" role="status" aria-live="polite"></div><script src="/calendar.js" defer></script><script src="/app.js" defer></script>
 </body></html>

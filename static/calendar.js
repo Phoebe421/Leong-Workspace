@@ -1,0 +1,79 @@
+/* Phase 1: local calendar only. No remote services or credentials. */
+(() => {
+'use strict';
+const KEY='leong-calendar-v1', THEME='leong-calendar-theme';
+const categories={study:{label:'学习',color:'#7869da'},research:{label:'科研',color:'#4699a0'},career:{label:'职业',color:'#cb8c4d'},life:{label:'生活',color:'#ce759e'}};
+const $=s=>document.querySelector(s), escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const local=d=>iso(d)+'T'+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+const midnight=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
+const plus=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
+let selected=midnight(new Date()),mode='week',filter='all',theme='light',records=[],storageError='',editing=null,drag=null;
+function validate(items){
+ if(!Array.isArray(items)||items.length>10000)throw Error('日历数据格式无效');
+ const ids=new Set();return items.map(i=>{
+  if(!i||typeof i!=='object'||typeof i.id!=='string'||!/^[A-Za-z0-9-]{1,100}$/.test(i.id)||ids.has(i.id))throw Error('日程ID无效');ids.add(i.id);
+  if(typeof i.title!=='string'||!i.title.trim()||i.title.trim().length>200)throw Error('标题需为1–200字');
+  for(const k of ['start','end']){if(typeof i[k]!=='string'||!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(i[k])||!Number.isFinite(new Date(i[k]).getTime())||local(new Date(i[k]))!==i[k])throw Error('日期时间无效');}
+  if(new Date(i.end)<=new Date(i.start))throw Error('结束时间必须晚于开始时间');
+  if(!Object.hasOwn(categories,i.category)||!/^#[0-9a-f]{6}$/i.test(i.color)||typeof i.done!=='boolean'||typeof i.notes!=='string'||i.notes.length>5000)throw Error('分类、颜色或内容无效');
+  return {id:i.id,title:i.title.trim(),start:i.start,end:i.end,category:i.category,color:i.color,done:i.done,notes:i.notes};
+ });
+}
+try{const raw=localStorage.getItem(KEY);records=raw?validate(JSON.parse(raw)):[];theme=localStorage.getItem(THEME)==='dark'?'dark':'light';}catch(e){storageError='无法读取日历存储，原始数据已保留。请导入备份或检查浏览器权限。';}
+function save(next){try{const checked=validate(next);localStorage.setItem(KEY,JSON.stringify(checked));records=checked;storageError='';return true;}catch(e){toast(e.message+'；更改未保存');return false;}}
+function viewEvents(){return records.filter(e=>filter==='all'||e.category===filter).sort((a,b)=>a.start.localeCompare(b.start));}
+function inDay(e,d){return new Date(e.start)<plus(midnight(d),1)&&new Date(e.end)>midnight(d);}
+function clock(s){return new Date(s).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',hour12:false});}
+function dates(){if(mode==='day')return [selected];if(mode==='week'){const start=plus(selected,-((selected.getDay()+6)%7));return Array.from({length:7},(_,i)=>plus(start,i));}const first=new Date(selected.getFullYear(),selected.getMonth(),1),start=plus(first,-((first.getDay()+6)%7));return Array.from({length:42},(_,i)=>plus(start,i));}
+function title(){if(mode==='month')return `${selected.getFullYear()}年${selected.getMonth()+1}月`;const days=dates();return mode==='day'?`${iso(selected)} ${['周日','周一','周二','周三','周四','周五','周六'][selected.getDay()]}`:`${iso(days[0])} — ${iso(days[6])}`;}
+function eventButton(e,extra='',style=''){return `<button class="cal-event ${e.done?'cal-completed':''}" style="--event-color:${e.color};${style}" data-cal-edit="${e.id}" ${extra}><strong>${escape(e.title)}</strong><small>${clock(e.start)}–${clock(e.end)} · ${categories[e.category].label}${e.done?' · 已完成':''}</small></button>`;}
+function monthGrid(){const events=viewEvents();return `<div class="cal-month-weekdays">${['一','二','三','四','五','六','日'].map(d=>`<span>周${d}</span>`).join('')}</div><div class="cal-month-grid">${dates().map(d=>{const list=events.filter(e=>inDay(e,d));return `<div class="cal-month-cell ${d.getMonth()!==selected.getMonth()?'cal-outside':''} ${iso(d)===iso(new Date())?'cal-today':''}" data-cal-drop="${iso(d)}"><button class="cal-date" data-cal-date="${iso(d)}" aria-label="在${iso(d)}创建日程">${d.getDate()}</button>${list.slice(0,3).map(e=>eventButton(e,`draggable="true" data-cal-drag="${e.id}"`)).join('')}${list.length>3?`<button class="cal-more" data-cal-open-day="${iso(d)}">查看另外 ${list.length-3} 项</button>`:''}</div>`;}).join('')}</div>`;}
+function layout(list,d){
+ const start=midnight(d).getTime(),end=plus(midnight(d),1).getTime();
+ const segments=list.filter(e=>inDay(e,d)).map(e=>({event:e,a:Math.max(start,new Date(e.start).getTime()),b:Math.min(end,new Date(e.end).getTime())})).sort((a,b)=>a.a-b.a||a.b-b.b);
+ let cluster=[],clusterEnd=0;const result=[];
+ function flush(){const ends=[];for(const s of cluster){let column=ends.findIndex(end=>end<=s.a);if(column<0)column=ends.length;ends[column]=s.b;s.column=column;}for(const s of cluster){s.columns=ends.length;result.push(s);}cluster=[];}
+ for(const s of segments){if(cluster.length&&s.a>=clusterEnd)flush();cluster.push(s);clusterEnd=Math.max(clusterEnd,s.b);}if(cluster.length)flush();return result;
+}
+function timeline(){const days=dates(),events=viewEvents();return `<div class="cal-time-scroll"><div class="cal-time-header" style="--days:${days.length}"><span></span>${days.map(d=>`<button class="${iso(d)===iso(new Date())?'cal-today-label':''}" data-cal-open-day="${iso(d)}"><small>${['日','一','二','三','四','五','六'][d.getDay()]}</small><strong>${d.getDate()}</strong></button>`).join('')}</div><div class="cal-time-body" style="--days:${days.length}"><div class="cal-hours">${Array.from({length:24},(_,h)=>`<span style="top:${h*48}px">${String(h).padStart(2,'0')}:00</span>`).join('')}</div>${days.map(d=>`<div class="cal-day-column" data-cal-drop="${iso(d)}">${layout(events,d).map(s=>{const a=new Date(s.a),b=new Date(s.b);const minutes=a.getHours()*60+a.getMinutes(),finish=s.b===plus(midnight(d),1).getTime()?1440:b.getHours()*60+b.getMinutes(),height=Math.max(22,(finish-minutes)*.8);const style=`top:${minutes*.8}px;height:${height}px;left:calc(${s.column/s.columns*100}% + 3px);width:calc(${100/s.columns}% - 6px);`;return `<div class="cal-event-wrap" style="${style}">${eventButton(s.event)}${s.a===new Date(s.event.start).getTime()?`<button class="cal-drag-handle" data-cal-handle="${s.event.id}" aria-label="拖动${escape(s.event.title)}调整时间" title="拖动调整时间">⠿</button>`:''}</div>`;}).join('')}</div>`).join('')}</div></div>`;}
+function render(){
+ const zone=Intl.DateTimeFormat().resolvedOptions().timeZone;
+ const dayCount=viewEvents().filter(e=>inDay(e,selected)).length;
+ return `<section class="calendar-module ${theme==='dark'?'cal-dark':''}"><div class="cal-heading"><div><div class="cal-eyebrow">PERSONAL CALENDAR · 第一阶段</div><h1>智能日历</h1><p>为重要的事，留出专属时间。</p></div><div class="cal-actions"><button class="cal-button" data-cal-theme aria-label="切换浅色深色模式">${theme==='dark'?'☀ 浅色':'☾ 深色'}</button><button class="cal-button cal-primary" data-cal-new>＋ 新建日程</button></div></div><div class="cal-toolbar"><div class="cal-period"><button class="cal-button" data-cal-nav="-1" aria-label="上一时段">‹</button><button class="cal-button" data-cal-today>今天</button><button class="cal-button" data-cal-nav="1" aria-label="下一时段">›</button><h2>${title()}</h2></div><div class="cal-views">${[['day','日'],['week','周'],['month','月']].map(([v,l])=>`<button data-cal-view="${v}" aria-pressed="${v===mode}" class="${v===mode?'active':''}">${l}</button>`).join('')}</div></div><div class="cal-subbar"><select id="cal-filter" aria-label="日程分类筛选"><option value="all">全部分类</option>${Object.entries(categories).map(([key,c])=>`<option value="${key}" ${filter===key?'selected':''}>${c.label}</option>`).join('')}</select><div class="cal-legend">${Object.values(categories).map(c=>`<span><i style="background:${c.color}"></i>${c.label}</span>`).join('')}</div><small>${escape(zone)} · ${dayCount} 项当日日程</small></div>${storageError?`<div class="cal-warning">${storageError}</div>`:''}<div class="cal-board">${mode==='month'?monthGrid():timeline()}</div><div class="cal-help">点击日程编辑；月视图拖动日程到目标日期，日／周视图拖动 ⠿ 按 15 分钟调整时间。支持跨日和重叠日程，自动安排与冲突建议将在第四阶段加入。</div><div class="cal-footer"><span>本地保存 · 无需 Google 授权 · 时间以设备时区为准</span><div><button class="cal-button" data-cal-export>备份日历</button><button class="cal-button" data-cal-import>导入日历</button><input type="file" id="cal-file" accept=".json,application/json" hidden></div></div></section>`;
+}
+function rerender(preserveScroll=true){if(page()!=='calendar')return;const old=$('.cal-time-scroll'),position=old?.scrollTop;$('#main').innerHTML=render();const next=$('.cal-time-scroll');if(next)next.scrollTop=preserveScroll&&position!==undefined?position:8*48;}
+function open(date=iso(selected),id='',hour=9){
+ const item=id?records.find(e=>e.id===id):null;editing=id||null;
+ const from=new Date(date+'T00:00:00');from.setMinutes(Math.min(1380,Math.max(0,hour*60)));const end=new Date(from);end.setHours(end.getHours()+1);
+ $('#cal-dialog')?.remove();const dialog=document.createElement('dialog');dialog.id='cal-dialog';dialog.className='cal-dialog '+(theme==='dark'?'cal-dark':'');
+ dialog.innerHTML=`<form id="cal-form"><div class="cal-modal-heading"><h2>${id?'编辑日程':'新建日程'}</h2><button type="button" class="cal-close" data-cal-cancel aria-label="关闭">×</button></div><label>名称<input name="title" required maxlength="200" placeholder="例如：雅思阅读练习" value="${escape(item?.title||'')}"></label><div class="cal-form-grid"><label>开始<input name="start" type="datetime-local" required step="60" value="${escape(item?.start||local(from))}"></label><label>结束<input name="end" type="datetime-local" required step="60" value="${escape(item?.end||local(end))}"></label><label>分类<select name="category">${Object.entries(categories).map(([key,c])=>`<option value="${key}" ${key===(item?.category||'study')?'selected':''}>${c.label}</option>`).join('')}</select></label><label>颜色<input type="color" name="color" value="${item?.color||categories.study.color}"></label></div><label>备注<textarea name="notes" maxlength="5000" placeholder="补充细节…">${escape(item?.notes||'')}</textarea></label><label class="cal-check"><input type="checkbox" name="done" ${item?.done?'checked':''}> 标记已完成</label><p id="cal-form-error" role="alert"></p><div class="cal-modal-actions">${id?'<button type="button" class="cal-button cal-delete" data-cal-delete>删除日程</button>':''}<button type="button" class="cal-button" data-cal-cancel>取消</button><button type="submit" class="cal-button cal-primary">保存日程</button></div></form>`;
+ document.body.append(dialog);dialog.showModal();
+ $('#cal-form').onsubmit=event=>{event.preventDefault();const data=Object.fromEntries(new FormData(event.target));const item={...data,id:editing||(crypto.randomUUID?crypto.randomUUID():'event-'+Date.now()+'-'+Math.random().toString(36).slice(2)),done:event.target.elements.done.checked};try{validate([item]);const next=editing?records.map(e=>e.id===editing?item:e):[...records,item];if(save(next)){dialog.close();rerender();toast('日程已保存');}}catch(e){$('#cal-form-error').textContent=e.message;}};
+}
+function move(id,date,minute=null){const e=records.find(e=>e.id===id);if(!e)return;const old=new Date(e.start),start=new Date(date+'T00:00:00');start.setMinutes(minute===null?old.getHours()*60+old.getMinutes():Math.min(1425,Math.max(0,minute)));const end=new Date(start.getTime()+(new Date(e.end).getTime()-old.getTime()));const changed={...e,start:local(start),end:local(end)};if(save(records.map(i=>i.id===id?changed:i))){rerender();toast('日程时间已更新');}}
+function download(){const url=URL.createObjectURL(new Blob([JSON.stringify({version:1,events:records},null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='日历备份-'+iso(new Date())+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+document.addEventListener('click',event=>{const b=event.target.closest('[data-cal-view],[data-cal-nav],[data-cal-today],[data-cal-new],[data-cal-date],[data-cal-open-day],[data-cal-edit],[data-cal-theme],[data-cal-cancel],[data-cal-delete],[data-cal-export],[data-cal-import]');if(!b)return;
+ if(b.hasAttribute('data-cal-cancel'))return $('#cal-dialog').close();
+ if(b.hasAttribute('data-cal-delete')){if(confirm('确定删除这个日程？删除后无法恢复。')&&save(records.filter(e=>e.id!==editing))){$('#cal-dialog').close();rerender();toast('日程已删除');}return;}
+ if(b.hasAttribute('data-cal-theme')){const next=theme==='dark'?'light':'dark';try{localStorage.setItem(THEME,next);theme=next;rerender();}catch{toast('无法保存主题设置');}return;}
+ if(b.dataset.calView){mode=b.dataset.calView;rerender(false);return;}
+ if(b.dataset.calNav){const delta=Number(b.dataset.calNav);selected=mode==='month'?new Date(selected.getFullYear(),selected.getMonth()+delta,1):plus(selected,delta*(mode==='week'?7:1));rerender(false);return;}
+ if(b.hasAttribute('data-cal-today')){selected=midnight(new Date());rerender(false);return;}
+ if(b.hasAttribute('data-cal-new'))return open();
+ if(b.dataset.calDate)return open(b.dataset.calDate);
+ if(b.dataset.calOpenDay){selected=new Date(b.dataset.calOpenDay+'T00:00:00');mode='day';rerender(false);return;}
+ if(b.dataset.calEdit)return open('',b.dataset.calEdit);
+ if(b.hasAttribute('data-cal-export'))return download();
+ if(b.hasAttribute('data-cal-import'))$('#cal-file').click();
+});
+document.addEventListener('dblclick',e=>{if(e.target.classList.contains('cal-day-column')){const minute=Math.round((e.clientY-e.target.getBoundingClientRect().top)/12)*15;open(e.target.dataset.calDrop,'',Math.min(1380,minute)/60);}});
+document.addEventListener('change',async e=>{if(e.target.id==='cal-filter'){filter=e.target.value;rerender();}if(e.target.closest('#cal-form')&&e.target.name==='category')$('#cal-form').elements.color.value=categories[e.target.value].color;if(e.target.id==='cal-file'){try{const file=e.target.files[0];if(!file)return;if(file.size>10000000)throw Error('备份文件过大');const data=JSON.parse(await file.text());if(data.version!==1)throw Error('备份版本不支持');const checked=validate(data.events);if(confirm('导入会替换现有日历。建议先备份。继续？')&&save(checked)){rerender();toast('日历备份已导入');}}catch(error){toast(error.message);}finally{e.target.value='';}}});
+document.addEventListener('dragstart',e=>{const item=e.target.closest('[data-cal-drag]');if(item){e.dataTransfer.setData('application/x-leong-event',item.dataset.calDrag);e.dataTransfer.effectAllowed='move';}});
+document.addEventListener('dragover',e=>{if(e.target.closest('[data-cal-drop]')&&[...e.dataTransfer.types].includes('application/x-leong-event'))e.preventDefault();});
+document.addEventListener('drop',e=>{const target=e.target.closest('[data-cal-drop]'),id=e.dataTransfer.getData('application/x-leong-event');if(target&&id){e.preventDefault();move(id,target.dataset.calDrop,target.classList.contains('cal-day-column')?Math.round((e.clientY-target.getBoundingClientRect().top)/12)*15:null);}});
+document.addEventListener('pointerdown',e=>{const handle=e.target.closest('[data-cal-handle]');if(!handle||e.button!==0)return;e.preventDefault();const wrap=handle.closest('.cal-event-wrap');drag={id:handle.dataset.calHandle,offset:e.clientY-wrap.getBoundingClientRect().top,pointer:e.pointerId,handle};handle.setPointerCapture(e.pointerId);document.body.classList.add('cal-dragging');});
+document.addEventListener('pointerup',e=>{if(!drag||drag.pointer!==e.pointerId)return;const current=drag;drag=null;document.body.classList.remove('cal-dragging');const target=document.elementFromPoint(e.clientX,e.clientY)?.closest('.cal-day-column');if(target)move(current.id,target.dataset.calDrop,Math.round((e.clientY-target.getBoundingClientRect().top-current.offset)/12)*15);});
+document.addEventListener('pointercancel',()=>{drag=null;document.body.classList.remove('cal-dragging');});
+window.Calendar={render,validate,backup:()=>records.map(e=>({...e})),restore:items=>{const checked=validate(items);if(!save(checked))throw Error('日历保存失败');},move,layout};
+})();

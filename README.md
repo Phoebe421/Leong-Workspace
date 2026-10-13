@@ -48,3 +48,9 @@ node --check static/app.js
 ```
 
 云任务已隔离，请使用现有 checkout，不要创建 Git worktree，除非用户明确要求。新任务需重新启动服务；不要依赖旧任务进程。
+
+## 智能日历与 Apple 集成
+
+第一阶段本地日历已加入导航：[功能、运行与测试](docs/calendar-phase1.md)。日历有独立备份入口，不包含在工作台通用备份内。Google / Apple 授权、自然语言解析、自动规划与效率统计尚未接入。
+
+[Apple Calendar / Reminders 只读权限与可行性检查](docs/apple-integration.md)。当前云环境为 Linux，无法检查用户 Mac 的实际权限；提供了可在 Mac 上运行的只读检查脚本，未创建、修改或删除任何 Apple 事件。
